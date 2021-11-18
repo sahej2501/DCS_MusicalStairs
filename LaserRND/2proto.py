@@ -14,7 +14,7 @@ media_list = player.media_list_new()
 media_player = player.media_list_player_new()
   
 # creating a new media
-media = player.media_new("piano_import_C.mp3")
+media = player.media_new("piano_import_F.mp3")
   
 # adding media to media list
 media_list.add_media(media)
@@ -27,7 +27,7 @@ player.vlm_set_loop("death_note", True)
 #sound1 =vlc.MediaPlayer("piano_import_C.mp3")
 
 #define the pin that goes to the circuit
-pin_to_circuit = 36
+pin_to_circuit = 10
 
 def rc_time (pin_to_circuit):
     count = 0
@@ -35,7 +35,7 @@ def rc_time (pin_to_circuit):
     #Output on the pin for 
     GPIO.setup(pin_to_circuit, GPIO.OUT)
     GPIO.output(pin_to_circuit, GPIO.LOW)
-    time.sleep(0.1)
+    time.sleep(0.09)
 
     #Change the pin back to input
     GPIO.setup(pin_to_circuit, GPIO.IN)
@@ -43,7 +43,7 @@ def rc_time (pin_to_circuit):
     #Count until the pin goes high
     while (GPIO.input(pin_to_circuit) == GPIO.LOW):
         count += 1
-        if(count > 100):
+        if(count > 500):
           return count
 
     return count
@@ -52,15 +52,15 @@ def rc_time (pin_to_circuit):
 try:
     # Main loop
     while True:
-      # print(rc_time(pin_to_circuit))
+       print(rc_time(pin_to_circuit))
       # media_player.play()
-       if(rc_time(pin_to_circuit) > 70):
+       if(rc_time(pin_to_circuit) > 499):
            print("Detecting")
            media_player.play()
-          # time.sleep(0.7)
+           time.sleep(0.1)
        else: 
            print("NOT") 
-       print(rc_time(pin_to_circuit))
+#       print(rc_time(pin_to_circuit))
 except KeyboardInterrupt:
     pass
 finally:
