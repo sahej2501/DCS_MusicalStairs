@@ -13,7 +13,7 @@ import vlc
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
-pin1 = 8
+pin1 = 10
 pin2 = 36
 
 def rc_time (pin_to_circuit):
@@ -30,6 +30,8 @@ def rc_time (pin_to_circuit):
     #Count until the pin goes high
     while (GPIO.input(pin_to_circuit) == GPIO.LOW):
         count += 1
+        if(count > 100):
+          return count
 
     return count
 
@@ -76,7 +78,7 @@ while True:
     pin2_val = rc_time(pin2)
     print('got pin value')
     print('print2 val: {}'.format(pin2_val))
-    if (pin2_val) < 1000 and (time.time() - time2 > 1):
+    if (pin2_val) < 750 and (time.time() - time2 > 1):
         
         print('low')
         player = vlc.MediaPlayer("piano_import_C.mp3")
